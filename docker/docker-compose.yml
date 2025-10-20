@@ -1,0 +1,17 @@
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: frontend
+    ports:
+      - "5173:5173"
+      - "4173:4173"
+    volumes:
+      - ..:/workspace
+      - ../tmp/fish/:/root/.local/share/fish/
+    entrypoint: bash -c 'pnpm install && pnpm dev --host 0.0.0.0'
+#    entrypoint: bash -c 'pnpm install && pnpm build:gh && pnpm preview --outDir gh-dist --base /vue3-jsoneditor/ --host 0.0.0.0'
+    environment:
+      NODE_ENV: development
+    working_dir: /workspace
